@@ -287,7 +287,7 @@ class Parser {
 			meshData.name = mesh.name;
 			for (prim in mesh.primitives) {
 				var primData = new PrimitiveData();
-				primData.accList = [-1, -1, -1, -1, -1, -1];
+				primData.accList = [-1, -1, -1, -1, -1, -1, -1];
 				primData.matInd = prim.material;
 				var posAcc = prim.attributes.get(POSITION);
 				var vertCount = srcData.accessors[posAcc].count;
@@ -326,6 +326,13 @@ class Parser {
 				}
 				// Assert we have both or neither of joints and weights
 				Debug.assert((weightsAcc == null) == (jointsAcc == null));
+
+				var tangentsAcc = prim.attributes.get(TANGENT);
+				if (tangentsAcc != null) {
+					primData.accList[TAN] = tangentsAcc;
+				} else {
+					// TODO
+				}
 
 				primData.indices = prim.indices;
 				if (primData.indices != null) {
